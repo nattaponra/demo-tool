@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  api:
+    container_name: api
+    image: nginx:latest
+    depends_on:
+      - php
+    volumes:
+    - ./php-code:/code
+    - ./site.conf:/etc/nginx/conf.d/site.conf
+    environment:
+    - "VIRTUAL_HOST=api.local.com"
+    - "LETSENCRYPT_HOST=api.local.com"
+    - "LETSENCRYPT_EMAIL=admin@nattaponra.com"
+    networks:
+    - main-network
+
+  php:
+    container_name: php
+    image: php:7-fpm
+    volumes:
+    - ./php-code:/code
+    networks:
+    - main-network
+
+networks:
+  main-network:
+    external:
+      name: main-network

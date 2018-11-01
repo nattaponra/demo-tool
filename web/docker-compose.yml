@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  web:
+    container_name: web
+    image: nginx:latest
+    volumes:
+    - ./frontend-code:/usr/share/nginx/html:ro
+    environment:
+    - "VIRTUAL_HOST=web.local.com"
+    - "LETSENCRYPT_HOST=web.local.com"
+    - "LETSENCRYPT_EMAIL=admin@nattaponra.com"
+    networks:
+    - main-network
+
+networks:
+    main-network:
+      external:
+        name: main-network
